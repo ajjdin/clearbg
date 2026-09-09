@@ -1,5 +1,5 @@
 import './style.css';
-import removeBackground from '@imgly/background-removal';
+import { removeBackground } from '@imgly/background-removal';
 
 const app = document.querySelector('#app');
 

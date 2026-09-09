@@ -264,4 +264,29 @@ els.dropzone.addEventListener('drop', (event) => {
   loadFile(event.dataTransfer?.files?.[0]);
 });
 
+document.addEventListener('paste', (event) => {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      const file = item.getAsFile();
+
+      if (file) {
+        const extension = file.type.split('/')[1] || 'png';
+
+        const pastedFile = new File(
+          [file],
+          `pasted-image-${Date.now()}.${extension}`,
+          { type: file.type }
+        );
+
+        loadFile(pastedFile);
+        event.preventDefault();
+        break;
+      }
+    }
+  }
+});
+
 window.addEventListener('beforeunload', cleanupUrls);
